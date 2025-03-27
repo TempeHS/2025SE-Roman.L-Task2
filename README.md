@@ -1,5 +1,6 @@
 # Seoul Bike Sharing Demand
 
+Source dataset: https://archive.ics.uci.edu/dataset/560/seoul+bike+sharing+demand
 Predicts the amount of bikes required over conditions.
 
 ## Description
@@ -7,6 +8,24 @@ Predicts the amount of bikes required over conditions.
 An in-depth paragraph about your project and overview of use.
 
 Students are to assume the role of data scientists or engineers and follow an MLOps process to engineer a machine-learning model for an emerging audience. Students are encouraged to identify their own data set and ‘business problem’ based on their interests.
+
+Business problem: places where rental bikes are used may be redundent due to weather conditions and can waste resources which would be beneficial elsewhere. To address this, the Seoul Metropolitan Government has commisioned me to develop a machine-learning model which predicts rental frequency based on
+| Column | Type |
+| -------------- | ----------- |
+| date | date |
+| count | integer |
+| hour | integer |
+| temp | continuous |
+| humidity | integer |
+| windspeed | continuous |
+| visibility | integer |
+| dewpointemp | continuous |
+| solarradiation | continuous |
+| rainfall | integer |
+| snowfall | integer |
+| seasons | categorical |
+| holiday | binary |
+| functionday | binary |
 
 ## Getting Started
 
@@ -67,7 +86,7 @@ Roman Lacbungan
 
 ## License
 
-This project is licensed under the Roman Lacbungan License - see the LICENSE.md file for details
+This project is licensed under the ... License - see the LICENSE.md file for details
 
 ## Acknowledgments
 
