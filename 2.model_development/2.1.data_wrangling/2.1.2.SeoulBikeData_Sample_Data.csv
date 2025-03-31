@@ -11,7 +11,14 @@ Date,Count,Hour,Temp,Humidity,WindSpeed,Visibility,DewPointTemp,Solar Radiation,
 01/12/2017,490,9,-6.5,27,0.5,1928,-22.4,0.23,0,0,Winter,No Holiday,Yes
 01/12/2017,339,10,-3.5,24,1.2,1996,-21.2,0.65,0,0,Winter,No Holiday,Yes
 01/12/2017,360,11,-0.5,21,1.3,1936,-20.2,0.94,0,0,Winter,No Holiday,Yes
-01/12/2017,449,12,1.7,23,1.4,2000,-17.2,1.11,0,0,Winter,No Holiday,Yes
+01/12/2017,449,12,1.7,23# Encode 'Functioning Day' column
+data_frame['Functioning Day'] = data_frame['Functioning Day'].apply(lambda day: 1 if day.lower() == 'yes' else 0)
+
+# Encode 'Holiday' column
+data_frame['Holiday'] = data_frame['Holiday'].apply(lambda holiday: 1 if holiday.lower() == 'yes' else 0)
+
+# Print the first few rows to verify
+print(data_frame[['Functioning Day', 'Holiday']].head()),1.4,2000,-17.2,1.11,0,0,Winter,No Holiday,Yes
 01/12/2017,451,13,2.4,25,1.6,2000,-15.6,1.16,0,0,Winter,No Holiday,Yes
 01/12/2017,447,14,3,26,2,2000,-14.6,1.01,0,0,Winter,No Holiday,Yes
 01/12/2017,463,15,2.1,36,3.2,2000,-11.4,0.54,0,0,Winter,No Holiday,Yes

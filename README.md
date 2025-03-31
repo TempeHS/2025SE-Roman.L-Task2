@@ -9,7 +9,9 @@ An in-depth paragraph about your project and overview of use.
 
 Students are to assume the role of data scientists or engineers and follow an MLOps process to engineer a machine-learning model for an emerging audience. Students are encouraged to identify their own data set and ‘business problem’ based on their interests.
 
+Domain knowledge: urban mobility and transportation
 Business problem: places where rental bikes are used may be redundent due to weather conditions and can waste resources which would be beneficial elsewhere. To address this, the Seoul Metropolitan Government has commisioned me to develop a machine-learning model which predicts rental frequency based on
+
 | Column | Type |
 | -------------- | ----------- |
 | date | date |
