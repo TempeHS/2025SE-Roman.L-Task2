@@ -19,7 +19,9 @@ import validate as sv
 # For CSRF and future implementation for API
 load_dotenv()
 
+# Flask app (OOP)
 app = Flask(__name__)
+
 app_log = logging.getLogger(__name__)
 logging.basicConfig(
     filename="security_log.log",
@@ -106,7 +108,7 @@ def index():
 
             # Comfort Index Calculation
             comfort_index = temp - 0.55 * (1 - (humidity / 100)) * (temp - 14.5) # to fit data
-            comfort_index_fix = comfort_index * 0.1 # no scaled
+            comfort_index_fix = comfort_index * 0.1 # not scaled
 
             # HourDPT (DewPointTemp * Hour)
             hour_dpt = (dew_point_temp) * hour
@@ -124,7 +126,7 @@ def index():
             model = pickle.load(open('my_saved_model.sav', 'rb'))
 
             # Make prediction
-            prediction = model.predict(finalfeatures_array)[0] * 10
+            prediction = model.predict(finalfeatures_array)[0] * 100
 
             print(prediction)
             result = int(round(prediction))
