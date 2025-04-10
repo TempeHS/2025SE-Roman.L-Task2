@@ -5,8 +5,7 @@ plt.style.use('style_Matplotlib_charts.mplstyle')
 from sklearn.linear_model import LinearRegression
 import pickle
 
-
-def save_model ():
+def save_model():
     training_data = pd.read_csv('course_specifications_data.csv', delimiter=',')
     x = np.array(training_data.iloc[:,1]).reshape(-1, 1)
     y = np.array(training_data.iloc[:,0])# Create the model
