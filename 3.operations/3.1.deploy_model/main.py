@@ -11,10 +11,12 @@ from flask_csp.csp import csp_header
 from flask_limiter import Limiter # Rate limiter
 from flask_limiter.util import get_remote_address # Rate limiter
 from dotenv import load_dotenv
-
-# Model Learning
 import numpy as np
 
+# Other imports
+import validate as sv
+
+# For CSRF and future implementation for API
 load_dotenv()
 
 app = Flask(__name__)
@@ -26,25 +28,17 @@ logging.basicConfig(
     format="%(asctime)s %(message)s",
 )
 
-# CSRF
-app.secret_key = b"f53oi3uriq9pifpff;apl" # os.getenv('secret_key')
-csrf = CSRFProtect(app)
-
 # Default rate limiter
 limiter = Limiter(
     get_remote_address,
     app=app,
-    default_limits=["200 per day", "100 per hour", "1 per second"],
+    default_limits=["200 per day", "100 per hour","1 per second"],
     storage_uri="memory://",
 )
 
-@app.errorhandler(429)
-def ratelimit_handler(e):
-    '''
-    Rate limit
-    '''
-    flash("Rate limit exceeded. Please try again later.", "error")
-    return redirect(url_for('index'))
+# CSRF
+app.secret_key = b"f53oi3uriq9pifpff;apl" # os.getenv('secret_key')
+csrf = CSRFProtect(app)
 
 # Redirect index.html to domain root for consistent UX
 @app.route("/index", methods=["GET"])
@@ -81,6 +75,7 @@ def root():
     }
 )
 
+# Can be replaced with API due to Flask implementation
 def index():
     '''
     Landing page with ML prediction
@@ -99,18 +94,41 @@ def index():
             # Combine into feature list in the order your model expects
             features = [[temp, humidity, dew_point_temp, wind_speed, rainfall, hour]]
 
-            # Load model
-            model_path = os.path.join(app.root_path, 'models', 'model.pkl')
-            if os.path.exists(model_path):
-                with open(model_path, 'rb') as f:
-                    model = pickle.load(f)
+            if not sv.validate(features):
+                print("Invalid format")
+                print(features)
+                return redirect(url_for('index'))
 
-                # Make prediction
-                prediction = model.predict(features)[0]
-                result = int(round(prediction))
-                app_log.info("ML prediction: %s", result)
-            else:
-                flash("Model not available", "error")
+            # Engineered features are calculated through data_records.md
+
+            # RushHour (Binary)
+            rush_hour = 1 if (7 <= hour <= 9) or (17 <= hour <= 19) else 0
+
+            # Comfort Index Calculation
+            comfort_index = temp - 0.55 * (1 - (humidity / 100)) * (temp - 14.5) # to fit data
+            comfort_index_fix = comfort_index * 0.1 # no scaled
+
+            # HourDPT (DewPointTemp * Hour)
+            hour_dpt = (dew_point_temp) * hour
+
+            # HourDPT%
+            hour_dpt_percentage = round((dew_point_temp / hour_dpt), 2)
+            hour_dpt_percentage_fix = hour_dpt_percentage * 100 # to fit data
+
+            finalfeatures = [comfort_index_fix, hour_dpt_percentage_fix, temp, dew_point_temp, wind_speed, rainfall, rush_hour]
+            finalfeatures_array = np.array(finalfeatures).reshape(1, -1)
+
+            print("Final features: ", finalfeatures)
+
+            # Load model
+            model = pickle.load(open('my_saved_model.sav', 'rb'))
+
+            # Make prediction
+            prediction = model.predict(finalfeatures_array)[0] * 10
+
+            print(prediction)
+            result = int(round(prediction))
+            app_log.info("ML prediction: %s", result)
 
         except ValueError:
             flash("Please enter valid numbers", "error")
