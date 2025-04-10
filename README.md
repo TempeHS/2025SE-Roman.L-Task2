@@ -1,22 +1,33 @@
+[![Python Version](https://img.shields.io/badge/python-3.12.2-blue.svg?style=flat-square)](https://www.python.org/downloads/release/python-3122/)
+
 # Seoul Bike Sharing Demand
-
-Source dataset: https://archive.ics.uci.edu/dataset/560/seoul+bike+sharing+demand
-
-Domain knowledge: Urban mobility and transportation
-
-Predicts the amount of bikes required over conditions.
 
 ## Description
 
-An in-depth paragraph about your project and overview of use.
+### Diagrams
 
-Students are to assume the role of data scientists or engineers and follow an MLOps process to engineer a machine-learning model for an emerging audience. Students are encouraged to identify their own data set and ‘business problem’ based on their interests.
+[.working_documents](.working_documents)
 
-## Business Problem
+### Business Problem
 
-Places where rental bikes are used may be redundent due to weather conditions and can waste resources which would be beneficial elsewhere. To address this, the Seoul Metropolitan Government has commisioned me to develop a machine-learning model which predicts rental frequency based on weather conditions.
+**Domain knowledge:** Urban mobility and transportation
 
-## Features
+- Places where rental bikes are used may be redundent due to weather conditions and can waste resources which would be beneficial elsewhere.
+- To address this, the Seoul Metropolitan Government has commisioned me to develop a machine-learning model which predicts rental frequency based on weather conditions.
+
+### Machine learning problem
+
+- Predicts the amount of bikes required over weather and time conditions.
+
+### Defining success metrics
+
+- Model generalises well to training data
+
+### Available data
+
+I sourced a validated raw data set (https://archive.ics.uci.edu/dataset/560/seoul+bike+sharing+demand). The data is saved in the CSV file [2.1.2.SeoulBikeData_Sample_Data.csv.](2.model_development/2.1.data_wrangling/2.1.2.SeoulBikeData_Sample_Data.csv)
+
+The data columns are:
 
 | Column         | Description                                                                                     |
 | -------------- | ----------------------------------------------------------------------------------------------- |
@@ -34,6 +45,8 @@ Places where rental bikes are used may be redundent due to weather conditions an
 | seasons        | The season of the year (Spring, Summer, Fall, Winter), capturing seasonal variations in demand. |
 | holiday        | To account for changes in demand on holidays.                                                   |
 | functionday    | To exclude non-operational days.                                                                |
+
+[Engineered Features](/workspaces/2025SE-Roman.Lac-Task2/2.model_development/2.1.data_wrangling/2.1.2.data.records.md)
 
 ## Getting Started
 
@@ -55,27 +68,58 @@ pillow
 pydotplus
 ```
 
+```
+Flask
+flask-wtf
+flask-csp
+flask-limiter
+flask-login
+bcrypt
+APScheduler
+bleach
+python-dotenv
+```
+
 ### Installing
 
-- How/where to download your program
-- Any modifications needed to be made to files/folders
+- Clone GitHub repository
+
+```
+https://github.com/TempeHS/2025SE-Roman.L-Task2
+```
 
 ### Executing program
 
-- How to run the program
-- Step-by-step bullets
+- Install requirements
 
 ```
-code blocks for commands
+pip install -r requirements.txt
 ```
 
-## Help
+- Model development is split into 4 sections, each with interactable and documented Jupyter notebooks:
+  - [2.1.data_wrangling](2.model_development/2.1.data_wrangling)
+  - [2.2.feature_engineering](2.model_development/2.2.feature_engineering)
+  - [2.3.model_training](2.model_development/2.3.model_training)
+  - [2.4.model_testing_and_Evaluation](2.model_development/2.4.model_testing_and_validation)
 
-Any advise for common problems or issues.
+#### To run deploy Seoul Bike Demand Predictor system
+
+- Change directory to 3.Operations
 
 ```
-command to run if program contains helper info
+cd 3.operations/3.1.deploy_model
 ```
+
+- Run system
+
+```
+python main.py
+```
+
+Once deployed, the UI can be accessed on either:
+
+    http://localhost:5000
+    http://127.0.0.1:5000
 
 ## Authors
 
@@ -86,9 +130,17 @@ Roman Lacbungan -
 
 ## Version History
 
+- ## 0.6
+- 0.5
+  - Completed model evaluation
+  - Started UI
+- 0.4
+  - Completed testing linear/polynominal regression
+- 0.3
+  - Completed feature engineering
 - 0.2
-  - Various bug fixes and optimizations
-  - See [commit change]() or See [release history]() or see [branch]()
+  - Completed data wrangling
+  - See [commit change](https://github.com/TempeHS/2025SE-Roman.L-Task2/commit/ecf67dcf44eb707d21ad7196962b72cec9d78bda)
 - 0.1
   - Initial Release
 
@@ -103,3 +155,4 @@ Inspiration, code snippets, etc.
 - [Github md syntax](https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax)
 - [TempeHS Jupyter-Notebook template](https://github.com/TempeHS/TempeHS_Jupyter-Notebook_DevContainer)
 - [TempeHS MLOps template](https://github.com/TempeHS/MLOps)
+- [Roman.L 2025 Developer Log](https://github.com/TempeHS/2025SE-Roman.L-HSCTask1)

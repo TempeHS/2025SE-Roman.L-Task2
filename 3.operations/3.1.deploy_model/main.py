@@ -17,7 +17,7 @@ import numpy as np
 import validate as sv
 
 # For CSRF and future implementation for API
-load_dotenv()
+# load_dotenv()
 
 # Flask app (OOP)
 app = Flask(__name__)
@@ -92,46 +92,33 @@ def index():
             wind_speed = float(request.form.get("WindSpeed"))
             rainfall = float(request.form.get("Rainfall"))
             hour = int(request.form.get("Hour"))
-
             # Combine into feature list in the order your model expects
             features = [[temp, humidity, dew_point_temp, wind_speed, rainfall, hour]]
-
             if not sv.validate(features):
                 print("Invalid format")
                 print(features)
                 return redirect(url_for('index'))
-
             # Engineered features are calculated through data_records.md
-
             # RushHour (Binary)
             rush_hour = 1 if (7 <= hour <= 9) or (17 <= hour <= 19) else 0
-
             # Comfort Index Calculation
             comfort_index = temp - 0.55 * (1 - (humidity / 100)) * (temp - 14.5) # to fit data
             comfort_index_fix = comfort_index * 0.1 # not scaled
-
             # HourDPT (DewPointTemp * Hour)
             hour_dpt = (dew_point_temp) * hour
-
             # HourDPT%
             hour_dpt_percentage = round((dew_point_temp / hour_dpt), 2)
             hour_dpt_percentage_fix = hour_dpt_percentage * 100 # to fit data
-
             finalfeatures = [comfort_index_fix, hour_dpt_percentage_fix, temp, dew_point_temp, wind_speed, rainfall, rush_hour]
             finalfeatures_array = np.array(finalfeatures).reshape(1, -1)
-
             print("Final features: ", finalfeatures)
-
             # Load model
-            model = pickle.load(open('my_saved_model.sav', 'rb'))
-
+            model = pickle.load(open('my_saved_mode.sav', 'rb'))
             # Make prediction
             prediction = model.predict(finalfeatures_array)[0] * 100
-
             print(prediction)
             result = int(round(prediction))
             app_log.info("ML prediction: %s", result)
-
         except ValueError:
             flash("Please enter valid numbers", "error")
         except Exception as e:
