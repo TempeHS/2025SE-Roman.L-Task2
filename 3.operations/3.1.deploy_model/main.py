@@ -113,7 +113,7 @@ def index():
             finalfeatures_array = np.array(finalfeatures).reshape(1, -1)
             print("Final features: ", finalfeatures)
             # Load model
-            model = pickle.load(open('my_saved_mode.sav', 'rb'))
+            model = pickle.load(open('my_saved_model.sav', 'rb'))
             # Make prediction
             prediction = model.predict(finalfeatures_array)[0] * 100
             print(prediction)
