@@ -10,7 +10,7 @@ from flask_wtf import CSRFProtect
 from flask_csp.csp import csp_header
 from flask_limiter import Limiter # Rate limiter
 from flask_limiter.util import get_remote_address # Rate limiter
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 import numpy as np
 
 # Other imports
@@ -108,16 +108,17 @@ def index():
             hour_dpt = (dew_point_temp) * hour
             # HourDPT%
             hour_dpt_percentage = round((dew_point_temp / hour_dpt), 2)
-            hour_dpt_percentage_fix = hour_dpt_percentage * 100 # to fit data
+            hour_dpt_percentage_fix = hour_dpt_percentage * 10 # to fit data
             finalfeatures = [comfort_index_fix, hour_dpt_percentage_fix, temp, dew_point_temp, wind_speed, rainfall, rush_hour]
             finalfeatures_array = np.array(finalfeatures).reshape(1, -1)
             print("Final features: ", finalfeatures)
             # Load model
             model = pickle.load(open('my_saved_model.sav', 'rb'))
             # Make prediction
-            prediction = model.predict(finalfeatures_array)[0] * 100
+            prediction = model.predict(finalfeatures_array)[0] * 1000
+            prediction_fix = abs(prediction)
             print(prediction)
-            result = int(round(prediction))
+            result = int(round(prediction_fix))
             app_log.info("ML prediction: %s", result)
         except ValueError:
             flash("Please enter valid numbers", "error")
