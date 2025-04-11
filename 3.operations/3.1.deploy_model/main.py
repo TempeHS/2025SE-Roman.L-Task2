@@ -118,7 +118,7 @@ def index():
             # Load model
             model = pickle.load(open('my_saved_model.sav', 'rb'))
             # Make prediction
-            prediction = model.predict(finalfeatures_array)[0] * 1000
+            prediction = model.predict(finalfeatures_array)[0]
             prediction_fix = abs(prediction)
             print(prediction)
             result = int(round(prediction_fix))
