@@ -1,29 +1,31 @@
 [![Python Version](https://img.shields.io/badge/python-3.12.2-blue.svg?style=flat-square)](https://www.python.org/downloads/release/python-3122/)
 
-# Seoul Bike Sharing Demand
-
-## Description
+# Seoul Bike Sharing Demand Predictor
 
 ### Diagrams
 
 [.working_documents](.working_documents)
 
-### Business Problem
+## 1. MLOps Design Phase
+
+### 1.1 Business Problem
 
 **Domain knowledge:** Urban mobility and transportation
 
 - Places where rental bikes are used may be redundent due to weather conditions and can waste resources which would be beneficial elsewhere.
-- To address this, the Seoul Metropolitan Government has commisioned me to develop a machine-learning model which predicts rental frequency based on weather conditions.
 
-### Machine learning problem
+- To address this, the Seoul Metropolitan Government has commisioned me to develop a machine-learning model which predicts rental frequency.
 
-- Predicts the amount of bikes required over weather and time conditions.
+### 1.2 Refactoring the business problem
 
-### Defining success metrics
+- A machine-learning model which predicts the amount of bikes required over weather and time conditions.
+
+### 1.3 Defining success metrics
 
 - Model generalises well to training data
+- Model generalises well to testing data
 
-### Available data
+### 1.4 Available data
 
 I sourced a validated raw data set (https://archive.ics.uci.edu/dataset/560/seoul+bike+sharing+demand). The data is saved in the CSV file [2.1.2.SeoulBikeData_Sample_Data.csv.](2.model_development/2.1.data_wrangling/2.1.2.SeoulBikeData_Sample_Data.csv)
 
@@ -73,10 +75,6 @@ Flask
 flask-wtf
 flask-csp
 flask-limiter
-flask-login
-bcrypt
-APScheduler
-bleach
 python-dotenv
 ```
 
@@ -102,9 +100,9 @@ pip install -r requirements.txt
   - [2.3.model_training](2.model_development/2.3.model_training)
   - [2.4.model_testing_and_Evaluation](2.model_development/2.4.model_testing_and_validation)
 
-#### To run deploy Seoul Bike Demand Predictor system
+#### To run deploy Seoul Bike Demand Predictor UI
 
-- Change directory to 3.Operations
+- Change directory
 
 ```
 cd 3.operations/3.1.deploy_model
@@ -130,7 +128,8 @@ Roman Lacbungan -
 
 ## Version History
 
-- ## 0.6
+- 0.6
+  - Deployed model
 - 0.5
   - Completed model evaluation
   - Started UI
@@ -143,6 +142,8 @@ Roman Lacbungan -
   - See [commit change](https://github.com/TempeHS/2025SE-Roman.L-Task2/commit/ecf67dcf44eb707d21ad7196962b72cec9d78bda)
 - 0.1
   - Initial Release
+
+* I did not use branches however this would have allowed new features being implemented while keeping the main branch unaffected
 
 ## License
 
