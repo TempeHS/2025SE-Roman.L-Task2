@@ -103,8 +103,8 @@ def index():
             rush_hour = 1 if (7 <= hour <= 9) or (17 <= hour <= 19) else 0
             # Comfort Index Calculation
             comfort_index = temp - 0.55 * (1 - (humidity / 100)) * (temp - 14.5) # to fit data
-            ci_train_min = -1
-            ci_train_max = 24 # scale?
+            ci_train_min = -1.0295999999999994
+            ci_train_max = 24.1214 # scale?
             comfort_index_fix = round(((comfort_index - ci_train_min) / (ci_train_max - ci_train_min)) * (0.90 - 0.15) + 0.15, 2)
             #comfort_index_fix = comfort_index * 0.1 # not scaled
             # HourDPT (DewPointTemp * Hour)
@@ -156,4 +156,4 @@ context.load_cert_chain('certs/certificate.pem', 'certs/privatekey.pem')
 
 if __name__ == "__main__":
     debug_mode = os.getenv('FLASK_DEBUG', 'True').lower() in ['true', '1', 't']
-    app.run(debug=False, host="127.0.0.1", port=5000, ssl_context=None) # 'context' for HTTPS, SSL
+    app.run(debug=True, host="127.0.0.1", port=5000, ssl_context=None) # 'context' for HTTPS, SSL
